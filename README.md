@@ -23,8 +23,9 @@
 3. [Methodology: The Modelling Pipeline](#-methodology-the-modelling-pipeline)
 4. [Key Insights & Model Evaluation](#-key-insights--model-evaluation)
 5. [Strategic Business Recommendations](#-strategic-business-recommendations)
-6. [Repository Structure](#-repository-structure)
-7. [Acknowledgements & Contact](#-acknowledgements--contact)
+6. [Future Scope & Improvements](#-future-scope--improvements)
+7. [Repository Structure](#-repository-structure)
+8. [Acknowledgements & Contact](#-acknowledgements--contact)
 
 ---
 
@@ -93,6 +94,15 @@ Based on the Lasso regression coefficients, the most significant variables drivi
 1. **Focus on Quality & Space:** The strongest positive predictors of property value are overwhelmingly related to the overall quality of materials (`OverallQual`) and total living area space (`GrLivArea`). Surprise Housing should prioritise undervalued homes that possess these core structural traits.
 2. **Location is Quantifiable:** Certain neighbourhoods (like Crawford) command a significant premium. The company should overlay these geographical coefficients with current market listings to identify anomalies (houses priced below the model's geographic expectation).
 3. **Deploying the Lasso Model:** Management should integrate the Lasso model into their purchasing pipeline. By automatically eliminating redundant variables, Lasso provides a clean, sparse equation that allows acquisition agents to quickly and reliably estimate a property's intrinsic value on the ground.
+
+---
+
+## 🚀 Future Scope & Improvements
+While this project successfully establishes a robust baseline using regularised linear models, the predictive architecture can be advanced further:
+1. **Non-Linear Ensemble Modelling:** Implement tree-based regressors such as **XGBoost** or **Random Forest** to capture complex, non-linear relationships in the housing data that Lasso/Ridge may miss.
+2. **Advanced Feature Engineering:** Create derived temporal and spatial metrics, such as `HouseAge_At_Sale` or calculating geographic proximity to city centres and schools, rather than relying solely on categorical neighbourhood tags.
+3. **Independent Variable Transformation:** Apply Box-Cox or Log transformations to highly right-skewed independent variables (e.g., `LotArea`) to further normalise the data space for linear algorithms.
+4. **Interactive Deployment:** Package the optimal Lasso model into a **Streamlit** web application, allowing Surprise Housing's acquisition agents to input property specs and receive real-time, data-driven valuation estimates in the field.
 
 ---
 
