@@ -1,81 +1,126 @@
-# Surprise Housing House Prediction
-> A US-based housing company named Surprise Housing has decided to enter the Australian market. The company uses data analytics to purchase houses at a price below their actual values and flip them on at a higher price. For the same purpose, the company has collected a data set from the sale of houses in Australia. The data is provided in the CSV file below.
+# 🏡 Surprise Housing: Advanced Regression & Property Valuation
 
-## Project Source link
-https://github.com/techexorcist/House_Price_Prediction
- 
-## Table of Contents
-* [Problem Statement](#problem-statement)
-* [General Info](#general-information)
-* [Conclusions](#conclusions)
-* [Technologies Used](#technologies-used)
-* [Acknowledgements](#acknowledgements)
+[![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://www.python.org/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-1.1.2-F7931E.svg)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-1.3.4-150458.svg)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-1.20.3-013243.svg)](https://numpy.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-0.11.2-blueviolet.svg)](https://seaborn.pydata.org/)
 
-<!-- You can include any other section that is pertinent to your problem -->
+> **Author:** Vinodh Nagarajaiah  
+> **Programme:** AI/ML Executive Programme (UpGrad & IIIT-B)
 
-## Problem Statement
+## ⏱️ Executive Summary (TL;DR)
+* **The Goal:** Build a robust, generalisable predictive model using Advanced Regression techniques (Ridge & Lasso) to accurately value prospective properties in the Australian housing market.
+* **The Data:** Analysed a comprehensive dataset containing numerous categorical and numerical variables regarding property conditions, dimensions, and locations.
+* **The Process:** Performed rigorous Exploratory Data Analysis (EDA), feature engineering, dummy variable creation, feature scaling, and implemented regularisation techniques to penalise model complexity.
+* **The Result:** Successfully identified the most significant predictor variables for property prices and determined the optimal regularisation penalties ($\alpha$). Lasso Regression was ultimately selected as the optimal model due to its inherent feature selection capabilities.
 
-### Business Understanding
+---
 
-The company is looking at prospective properties to buy to enter the market. You are required to build a regression model using regularisation in order to predict the actual value of the prospective properties and decide whether to invest in them or not.
+## 📖 Table of Contents
+1. [Business Problem & Objective](#-business-problem--objective)
+2. [Skills & Machine Learning Competencies](#-skills--machine-learning-competencies)
+3. [Methodology: The Modelling Pipeline](#-methodology-the-modelling-pipeline)
+4. [Key Insights & Model Evaluation](#-key-insights--model-evaluation)
+5. [Strategic Business Recommendations](#-strategic-business-recommendations)
+6. [Repository Structure](#-repository-structure)
+7. [Acknowledgements & Contact](#-acknowledgements--contact)
 
-### Business Goal:
+---
 
-You are required to model the price of houses with the available independent variables. This model will then be used by the management to understand how exactly the prices vary with the variables. They can accordingly manipulate the strategy of the firm and concentrate on areas that will yield high returns. Further, the model will be a good way for management to understand the pricing dynamics of a new market.
+## 💼 Business Problem & Objective
+**Surprise Housing**, a US-based real estate company, has decided to enter the Australian market. The company's business model relies on using data analytics to purchase houses at a price below their intrinsic value and subsequently flip them for a profit. 
 
-### Business Risk:
+**The Core Objective:** To model the price of houses using the available independent variables. The management requires a robust regression model incorporating **regularisation** to:
+1. Identify which variables are statistically significant in predicting the price of a house.
+2. Quantify how well those variables describe property prices.
+3. Determine the optimal value of lambda ($\lambda$ / alpha) for both **Ridge** and **Lasso** regression to ensure the model does not overfit and generalises well to unseen market data.
 
-- Customers will not buy a house if the company predicts a sale price that is higher than its value, resulting in a loss for the company.
+---
 
-### Requirement:
+## 🛠️ Skills & Machine Learning Competencies
+* **Advanced Regression:** Implementation of Ridge (L2) and Lasso (L1) Regularisation to balance model accuracy and complexity.
+* **Hyperparameter Tuning:** Finding the optimal penalty parameters ($\alpha$) to decrease model variance and prevent overfitting.
+* **Feature Engineering:** Dummy variable creation for high-cardinality categorical data and treating multicollinearity.
+* **Data Transformation:** Feature scaling to ensure uniform penalty application during regularisation.
+* **Statistical Evaluation:** Assessing model robustness using $R^2$, Residual Sum of Squares (RSS), Mean Squared Error (MSE), and Root Mean Squared Error (RMSE).
 
-The company wants to know:
-- Which variables are significant in predicting the price of a house, and
-- How well those variables describe the price of a house.
+---
 
-Also, determine the optimal value of lambda for ridge and lasso regression.
+## 🧠 Methodology: The Modelling Pipeline
 
-## General Information
-- Steps :
-<ol>
-    <li>Data Visualization</li>
-      <ol>
-        <li>Perform EDA to understand various variables.</li>
-        <li>Check the correlation between the variables.</li>
-      </ol>
-    <li>Data Preparation</li>
-      <ol>
-        <li>Create dummy variables for all the categorical features.</li>
-        <li>Divide the data to train & Test.</li>
-        <li>Perform Scaling.</li>
-        <li>Divide data into dependent & Independent variables.</li>
-      </ol>
-    <li>Data Modelling & Evaluation</li>
-      <ol>
-        <li>Create Linear Regression model </li>
-        <li>Create Ridge and Lasso models</li>
-        <li>Check the various assumptions.</li>
-        <li>Check the Adjusted R-Square for test data.</li>
-        <li>Report the final model.</li>
-      </ol>
-</ol>
-- Data Set : train.csv 
+### 1. Data Cleaning & EDA
+* Analysed the dataset to understand correlations between independent variables and the target variable (`SalePrice`).
+* Handled missing values strategically to preserve dataset integrity.
+* Conducted outlier treatment on the target variable to prevent skewing the regression coefficients.
 
+### 2. Data Preparation
+* Converted categorical variables into numeric formats using dummy encoding, significantly expanding the feature space.
+* Split the data into Training and Testing sets to evaluate model generalisation.
+* Applied feature scaling to independent variables. *(Crucial step: Regularisation heavily penalises large coefficients, making standardisation mandatory before applying Ridge or Lasso).*
 
-## Technologies Used
-- pandas - 1.3.4
-- numpy - 1.20.3
-- matplotlib - 3.4.3
-- seaborn - 0.11.2
-- plotly - 5.8.0
-- sklearn - 1.1.2
-- statsmodel - 0.13.2
+### 3. Model Building & Regularisation
+* **Ridge Regression (L2):** Applied Ridge to penalise large coefficients and reduce coefficient magnitude.
+* **Lasso Regression (L1):** Applied Lasso to perform intrinsic feature selection by shrinking less important feature coefficients to exactly zero, resulting in a simpler, more interpretable model.
 
+---
 
-<!-- As the libraries versions keep on changing, it is recommended to mention the version of library used in this project -->
+## 📊 Key Insights & Model Evaluation
 
-## Acknowledgements
-This project is an assessment exercise designed ad integratd into AI/ML programme at UpGrad in collabaration with IIIT-B
+### Optimal Alpha ($\alpha$) Values
+* **Ridge Optimal Alpha:** `10.0`
+* **Lasso Optimal Alpha:** `0.001`
 
-## Contact
-Created by [@techexorcist] - feel free to contact me!
+### Model Performance ($R^2$ Scores)
+* **Ridge Regression:** Train $R^2$: `0.94` | Test $R^2$: `0.93`
+* **Lasso Regression:** Train $R^2$: `0.95` | Test $R^2$: `0.88`
+
+*Note: Lasso was selected as the final model because the dataset contained a large number of variables, and reducing the feature space was a primary business goal.*
+
+### Top Predictor Variables (Lasso Regression)
+Based on the Lasso regression coefficients, the most significant variables driving Australian house prices include:
+1. **OverallQual (8 & 9):** Overall material and finish quality.
+2. **GrLivArea:** Above-ground living area square footage.
+3. **Neighborhood_Crawfor:** Properties located in the Crawford neighbourhood.
+4. **OverallCond (9):** Overall condition rating.
+5. **Exterior1st_BrkFace:** Brick Face exterior coverings.
+
+**Robustness Testing:** To ensure the model was generalisable, a secondary model was tested excluding the primary top 5 variables. The model adapted successfully, identifying `2ndFlrSF` (Second floor square feet), `Exterior1st_BrkFace`, `1stFlrSF` (First floor square feet), `TotalBsmtSF` (Total basement square feet), and `Functional_Typ` as the next strongest predictors.
+
+---
+
+## 💡 Strategic Business Recommendations
+1. **Focus on Quality & Space:** The strongest positive predictors of property value are overwhelmingly related to the overall quality of materials (`OverallQual`) and total living area space (`GrLivArea`). Surprise Housing should prioritise undervalued homes that possess these core structural traits.
+2. **Location is Quantifiable:** Certain neighbourhoods (like Crawford) command a significant premium. The company should overlay these geographical coefficients with current market listings to identify anomalies (houses priced below the model's geographic expectation).
+3. **Deploying the Lasso Model:** Management should integrate the Lasso model into their purchasing pipeline. By automatically eliminating redundant variables, Lasso provides a clean, sparse equation that allows acquisition agents to quickly and reliably estimate a property's intrinsic value on the ground.
+
+---
+
+## 📁 Repository Structure
+
+    ├── ml2_advanced_regression_assignment.ipynb   # Main Jupyter Notebook (EDA, Modelling, Regularisation)
+    ├── surprise_housing_au_train.csv              # Raw dataset used for analysis
+    ├── surprise_housing_data_description.csv      # Metadata and definitions for dataset columns
+    ├── surprise_housing_data_description.xlsx     # Excel format of data dictionary
+    ├── subjective_question_ml2_adv.pdf            # Detailed answers to subjective assessment questions
+    └── README.md                                  # Project overview and insights
+
+---
+
+## 🎓 Acknowledgments & Contact
+This project is an assessment exercise designed and integrated into the AI/ML Programme at **UpGrad**, in collaboration with **IIIT-B**. 
+
+**Created by:** Vinodh Nagarajaiah  
+
+* 💼 **LinkedIn:** [vinodh-nagarajaiah](https://www.linkedin.com/in/vinodh-nagarajaiah/)
+* 🐙 **GitHub:** [@techexorcist](https://github.com/techexorcist)
+* ✉️ **Email:** [vinodh.nagarajaiah@gmail.com](mailto:vinodh.nagarajaiah@gmail.com)
+
+<br>
+
+> **Disclaimer:** *The dataset used in this project is for educational purposes only. All personally identifiable information (PII) has been removed or anonymised.*
+
+---
+
+## 📜 Licence
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the LICENSE file for details.
